@@ -1,0 +1,32 @@
+[
+ {
+  "id": "PT-001",
+  "patient": "Bố – 64 tuổi",
+  "patient_phone": "09xx xxx 101",
+  "booker": "Bạn (người nhà)",
+  "doctor_id": "bs01",
+  "window_start": "2026-11-10",
+  "window_end": "2026-11-24",
+  "note": "Bác sĩ hẹn tái khám sau 1 tháng (phiếu tạo ngày 10/10/2026)."
+ },
+ {
+  "id": "PT-002",
+  "patient": "Mẹ – 61 tuổi",
+  "patient_phone": "09xx xxx 202",
+  "booker": "Bạn (người nhà)",
+  "doctor_id": "bs03",
+  "window_start": "2026-11-02",
+  "window_end": "2026-11-13",
+  "note": "Bác sĩ hẹn tái khám sau 3 tuần (phiếu tạo ngày 12/10/2026)."
+ },
+ {
+  "id": "PT-003",
+  "patient": "Ông nội – 76 tuổi",
+  "patient_phone": "không dùng điện thoại thông minh",
+  "booker": "Bạn (người nhà)",
+  "doctor_id": "bs05",
+  "window_start": "2026-12-01",
+  "window_end": "2026-12-12",
+  "note": "Bác sĩ hẹn tái khám sau 2 tháng (phiếu tạo ngày 02/10/2026)."
+ }
+]

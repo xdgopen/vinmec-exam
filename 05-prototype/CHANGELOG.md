@@ -1,0 +1,22 @@
+# Nhật ký thay đổi (changelog)
+
+## v0.1.1 – 19/10/2026 (sửa lỗi phát hiện khi rà soát, chưa kịp thử với người dùng thật)
+
+- Tìm bác sĩ theo tên ngắn. Trước đây gõ "bác sĩ An" thì báo không tìm thấy, không gợi ý, dù người nhà thường chỉ nhớ tên gọi. Nay khớp theo từ: mọi từ người dùng gõ phải có trong tên bác sĩ và phải có tên gọi (từ cuối). "An", "Minh An", "Tran Minh An" đều ra đúng bác sĩ. "Anh" không bị nhầm thành "An". Gõ mỗi tên đệm ("Minh") thì không đoán.
+- Trùng tên gọi: app hiện "Có N bác sĩ tên …, hãy chọn bác sĩ đã khám lần trước" và liệt kê để chọn, không tự chọn. Nếu câu yêu cầu có nêu khoa thì dùng khoa để lọc.
+- Thêm 4 test (tổng 11), tất cả qua.
+- Thêm `SETUP.md` (hướng dẫn cài đặt, chạy, bật AI, deploy, xử lý lỗi) và `requirements-dev.txt` (thêm pytest, trước đây thiếu nên không chạy được test sau khi cài). Đã cài thử từ đầu bằng pip trên Python 3.14: 11 test qua, app khởi động bình thường.
+
+## v0.1 – 19/10/2026 (bản đầu, chưa kịp thử với người dùng thật)
+
+- Màn hình "Phiếu tái khám" (mô phỏng BP1): 3 phiếu giả, mỗi phiếu gắn sẵn bác sĩ và khoảng thời gian.
+- Ô nhập yêu cầu tự do. AI (`claude-sonnet-5-5`) trích JSON (dữ liệu có cấu trúc) theo schema. Không có key hoặc AI lỗi thì dùng luật.
+- Kiểm tra dấu hiệu khẩn cấp theo luật, chạy trước mọi bước, hiện nút gọi 115 ngay, không hỏi thêm (bài học MIA M5, M9; MIA là chatbot của MyVinmec).
+- Tìm bác sĩ không phân biệt dấu. Không chắc thì nói "không tìm thấy" và gợi ý, không tự đoán (bài học MIA M2).
+- Màn hình lịch trống (mô phỏng BP2): hiện tất cả ngày còn trống trong khoảng, không bắt dò từng ngày. Kín lịch thì gợi ý 3 giờ gần nhất và danh sách chờ, thông báo gửi cả người đặt và người khám.
+- Màn hình xác nhận (không tạo lịch thật), đếm thao tác.
+- 7 test không giao diện (`tests/test_app.py`), tất cả qua.
+
+## Sau khi thử với người dùng
+
+*(Ghi các thay đổi theo test-log.md: v0.2, v0.3…)*

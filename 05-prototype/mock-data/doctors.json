@@ -1,0 +1,58 @@
+[
+ {
+  "id": "bs01",
+  "name": "Trần Minh An",
+  "title": "ThS.BS",
+  "department": "Tim mạch",
+  "bio": "Theo dõi tăng huyết áp, suy tim mạn. 12 năm kinh nghiệm."
+ },
+ {
+  "id": "bs02",
+  "name": "Nguyễn Hoài Nam",
+  "title": "BSCKII",
+  "department": "Tim mạch",
+  "bio": "Rối loạn nhịp tim. 18 năm kinh nghiệm."
+ },
+ {
+  "id": "bs03",
+  "name": "Lê Thu Hà",
+  "title": "TS.BS",
+  "department": "Nội tiết",
+  "bio": "Đái tháo đường, tuyến giáp. 15 năm kinh nghiệm."
+ },
+ {
+  "id": "bs04",
+  "name": "Đỗ Khánh Linh",
+  "title": "BSCKI",
+  "department": "Nội tiết",
+  "bio": "Rối loạn chuyển hóa. 8 năm kinh nghiệm."
+ },
+ {
+  "id": "bs05",
+  "name": "Phạm Quốc Bảo",
+  "title": "ThS.BS",
+  "department": "Cơ xương khớp",
+  "bio": "Thoái hóa khớp, loãng xương. 10 năm kinh nghiệm."
+ },
+ {
+  "id": "bs06",
+  "name": "Vũ Thanh Tâm",
+  "title": "BSCKII",
+  "department": "Cơ xương khớp",
+  "bio": "Viêm khớp. 20 năm kinh nghiệm."
+ },
+ {
+  "id": "bs07",
+  "name": "Hoàng Mai Anh",
+  "title": "ThS.BS",
+  "department": "Dinh dưỡng",
+  "bio": "Dinh dưỡng người cao tuổi. 9 năm kinh nghiệm."
+ },
+ {
+  "id": "bs08",
+  "name": "Bùi Đức Huy",
+  "title": "BS",
+  "department": "Dinh dưỡng",
+  "bio": "Dinh dưỡng bệnh mạn tính. 5 năm kinh nghiệm."
+ }
+]

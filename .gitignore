@@ -1,0 +1,20 @@
+# Dữ liệu gốc có tên thật, video phỏng vấn, tài liệu nội bộ: không đưa lên repo
+_private/
+*.mov
+*.mp4
+*.m4a
+*-take-note.md
+
+# Bí mật / API key
+.env
+.env.*
+*.pem
+**/.streamlit/secrets.toml
+
+# Môi trường và rác hệ thống
+.venv/
+venv/
+__pycache__/
+*.pyc
+.DS_Store
+.obsidian/
