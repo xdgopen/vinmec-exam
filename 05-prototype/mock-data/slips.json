@@ -1,0 +1,17 @@
+[
+  {
+    "id": "GH-1",
+    "label": "Giấy hẹn in, có ngày hẹn",
+    "text": "BỆNH VIỆN ĐA KHOA (MẪU GIẢ LẬP)\nGIẤY HẸN TÁI KHÁM\nHọ tên người bệnh: Nguyễn Văn A (giả lập)\nNăm sinh: 1962\nKhoa: Tim mạch\nBác sĩ điều trị: ThS.BS Trần Minh An\nNgày khám: 15/10/2026\nChẩn đoán: (thông tin giả lập, không đọc)\nHẹn tái khám ngày: 12/11/2026\nMang theo giấy hẹn này khi đến khám."
+  },
+  {
+    "id": "GH-2",
+    "label": "Giấy hẹn chép tay, chỉ ghi \"sau 1 tháng\"",
+    "text": "Giấy hẹn (chép tay, mẫu giả lập)\nBN: Trần Thị B, 68t\nKhám ngày 20/10/2026, khoa Nội tiết\nBS Lê Thu Hà dặn: uống thuốc đều, tái khám sau 1 tháng, nhớ mang sổ.\nĐơn thuốc: (giả lập, không đọc)"
+  },
+  {
+    "id": "GH-3",
+    "label": "Giấy hẹn viết tắt, ngày nói tương đối (luật khó đọc)",
+    "text": "Phiếu dặn dò (mẫu giả lập)\nGặp lại BS Nam bên tim mạch vào đầu tháng 12, nhớ nhịn ăn sáng.\nNgười bệnh: (giả lập)"
+  }
+]

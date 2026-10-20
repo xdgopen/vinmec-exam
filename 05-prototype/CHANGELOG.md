@@ -1,5 +1,19 @@
 # Nhật ký thay đổi (changelog)
 
+## v0.2.0 – 20/10/2026 (đọc giấy hẹn, chưa kịp thử với người dùng thật)
+
+- **Trạng thái AI:** app chạy bằng luật. Phần AI đọc giấy hẹn và câu gõ đã được thiết kế và nối sẵn (prompt, khuôn JSON, guardrail, test giả lập) nhưng **chưa bật**, chưa chạy với AI thật.
+- **Luồng mới "Tạo phiếu từ giấy hẹn":** người nhà dán nội dung giấy hẹn tái khám (in hoặc chép tay, dữ liệu giả, 3 mẫu GH-1 đến GH-3). App đọc bác sĩ và ngày hẹn rồi tạo phiếu, không cần bệnh viện có phiếu điện tử. Màn hình "Kiểm tra phiếu tái khám" cho người nhà xem và sửa bác sĩ, ngày hẹn, người khám trước khi tìm lịch. App tìm lịch từ 7 ngày trước đến 7 ngày sau ngày hẹn.
+- **Bỏ thông tin trước khi đọc:** các dòng có họ tên, năm sinh, chẩn đoán, đơn thuốc, BHYT… bị bỏ trước khi luật hoặc AI đọc giấy hẹn. Kiểm tra khẩn cấp vẫn chạy trên phần còn lại.
+- **Luật trước, AI sau** cho cả giấy hẹn và yêu cầu tự do. Luật đọc đủ bác sĩ và ngày thì không gọi AI. Nhãn chế độ hiện rõ đang dùng luật, AI, hay "không dùng AI".
+- **Sửa bộ đọc theo luật:** "bà" không còn bị đọc thành "ba". "Bác sĩ dặn…" không còn coi "dặn" là tên bác sĩ. Hiểu thêm "tuần sau", "tháng sau", "N tháng nữa", "sau N tuần".
+- Thêm `prompts/slip-system-prompt.md`, `mock-data/slips.json`, 7 test (tổng 18, AI được giả lập trong test).
+
+## v0.1.2 – 20/10/2026 (đóng gói Docker, chưa kịp thử với người dùng thật)
+
+- Thêm `Dockerfile` (image `python:3.13-slim`, chạy bằng user thường, có healthcheck), `docker-compose.yml` và `.dockerignore`. API key chỉ truyền lúc chạy qua biến môi trường, không nằm trong image. Mã nguồn app không đổi.
+- `SETUP.md` thêm mục 6 hướng dẫn chạy bằng Docker.
+
 ## v0.1.1 – 19/10/2026 (sửa lỗi phát hiện khi rà soát, chưa kịp thử với người dùng thật)
 
 - Tìm bác sĩ theo tên ngắn. Trước đây gõ "bác sĩ An" thì báo không tìm thấy, không gợi ý, dù người nhà thường chỉ nhớ tên gọi. Nay khớp theo từ: mọi từ người dùng gõ phải có trong tên bác sĩ và phải có tên gọi (từ cuối). "An", "Minh An", "Tran Minh An" đều ra đúng bác sĩ. "Anh" không bị nhầm thành "An". Gõ mỗi tên đệm ("Minh") thì không đoán.

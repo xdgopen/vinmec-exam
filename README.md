@@ -8,7 +8,7 @@ Vinmec Exploration Sprint
 | Khoảnh khắc nghiên cứu | Đặt lịch tái khám, nhìn từ phía người nhà đặt lịch hộ cha mẹ, ông bà |
 | Thời gian thực hiện | 15–19/10/2026 |
 | Dữ liệu | 3 phỏng vấn ẩn danh; kiểm thử ứng dụng MyVinmec và chatbot MIA; 6 nguồn tài liệu quốc tế |
-| Sản phẩm | Journey map, need statement, 3 best practice, prototype có AI, đánh giá rủi ro, kế hoạch coach, `slides.pdf` (kèm bản trình chiếu `slides/slides.html`) |
+| Sản phẩm | Journey map, need statement, 3 best practice, prototype (luật đang chạy, AI đã thiết kế), đánh giá rủi ro, kế hoạch coach, `slides.pdf` (kèm bản trình chiếu `slides/slides.html`) |
 | Sử dụng AI | Có, xem mục 3 "Phần do AI tạo" |
 | Thuật ngữ | Xem [`THUAT-NGU.md`](THUAT-NGU.md) |
 
@@ -28,12 +28,12 @@ Vinmec Exploration Sprint
 
 > Cách để **giảm thời gian và số lần thao tác cần thiết để đặt lịch tái khám với đúng bác sĩ đang theo dõi người bệnh**, cho **người nhà đặt lịch hộ người thân** (cha mẹ, ông bà), trong bối cảnh **không biết bác sĩ đó còn trống lịch vào ngày nào, phải dò từng ngày hoặc chấp nhận một bác sĩ khác**.
 
-**Hướng giải quyết.** Ba thực hành quốc tế cùng gợi ý một hướng: bác sĩ tạo sẵn phiếu tái khám (Epic Scheduling Tickets), hệ thống chủ động đưa ra lịch trống của đúng bác sĩ (Epic Fast Pass), và người nhà được đặt hộ khi người bệnh đồng ý (NHS App, ứng dụng của hệ thống y tế công Anh). Prototype mô phỏng hướng này, với các guardrail (cơ chế chặn rủi ro) rút từ lỗi đã thấy ở MIA: chậm hướng dẫn khẩn cấp, đưa ra chẩn đoán, không phát hiện thông tin sai.
+**Hướng giải quyết.** Ba thực hành quốc tế cùng gợi ý một hướng: bác sĩ tạo sẵn phiếu tái khám (Epic Scheduling Tickets), hệ thống chủ động đưa ra lịch trống của đúng bác sĩ (Epic Fast Pass), và người nhà được đặt hộ khi người bệnh đồng ý (NHS App, ứng dụng của hệ thống y tế công Anh). Prototype mô phỏng hướng này, với các guardrail (cơ chế chặn rủi ro) rút từ lỗi đã thấy ở MIA: chậm hướng dẫn khẩn cấp, đưa ra chẩn đoán, không phát hiện thông tin sai. Prototype hiện chạy hoàn toàn bằng luật (rule-based): luật bỏ thông tin cá nhân trên giấy hẹn, đọc bác sĩ và ngày hẹn theo các mẫu quen thuộc, kiểm tra khẩn cấp, tìm bác sĩ và hiện mọi ngày trống. **AI (Claude) được thiết kế và nối sẵn trong code nhưng chưa bật.** Mục đích của AI là đọc những giấy hẹn và câu nói mà luật không hiểu (viết tắt, "đầu tháng 12"…), để tạo phiếu tái khám mà Vinmec không cần làm tính năng mới. Nguyên tắc: luật trước, AI sau. AI không chẩn đoán, không tạo lịch hay tên bác sĩ.
 
 **Giới hạn chính.**
 - Cỡ mẫu nhỏ (n=3).
 - Chưa có số liệu nền định lượng.
-- Prototype chưa kịp thử với người dùng thật trong thời hạn bài tập. Kịch bản thử đã có trong `05-prototype/test-log.md`.
+- Prototype chưa kịp thử với người dùng thật trong thời hạn bài tập. Phần AI chưa được bật và chạy thật. Kịch bản thử đã có trong `05-prototype/test-log.md`.
 
 ## 1. Mục lục
 
@@ -43,7 +43,7 @@ Vinmec Exploration Sprint
 | [`02-journey-map/`](02-journey-map/) | Journey map có cảm xúc từng bước, workflow điểm đau chính | [`journey-map.md`](02-journey-map/journey-map.md), [`journey-map.png`](02-journey-map/journey-map.png), [`pain-workflow.png`](02-journey-map/pain-workflow.png) |
 | [`03-need-statement/`](03-need-statement/) | Need statement theo mẫu Biodesign và bằng chứng | [`need-statement.md`](03-need-statement/need-statement.md) |
 | [`04-best-practice/`](04-best-practice/) | 3 best practice quốc tế, nguồn, bài học cho Vinmec | [`best-practice.md`](04-best-practice/best-practice.md) |
-| [`05-prototype/`](05-prototype/) | Prototype Streamlit có AI, mã nguồn, prompt, test tự động, kịch bản thử với người dùng (chưa kịp thực hiện) | [`README.md`](05-prototype/README.md), [`SETUP.md`](05-prototype/SETUP.md), [`app.py`](05-prototype/app.py), [`prompts/`](05-prototype/prompts/), [`test-log.md`](05-prototype/test-log.md), [`CHANGELOG.md`](05-prototype/CHANGELOG.md) |
+| [`05-prototype/`](05-prototype/) | Prototype Streamlit chạy bằng luật, phần AI đã thiết kế và nối sẵn (chưa bật), mã nguồn, prompt, test tự động, kịch bản thử với người dùng (chưa kịp thực hiện) | [`README.md`](05-prototype/README.md), [`SETUP.md`](05-prototype/SETUP.md), [`app.py`](05-prototype/app.py), [`prompts/`](05-prototype/prompts/), [`test-log.md`](05-prototype/test-log.md), [`CHANGELOG.md`](05-prototype/CHANGELOG.md) |
 | [`06-rui-ro-dao-duc/`](06-rui-ro-dao-duc/) | Rủi ro an toàn, đạo đức, cách giảm thiểu, đường chuyển tuyến khẩn cấp | [`rui-ro-dao-duc.md`](06-rui-ro-dao-duc/rui-ro-dao-duc.md) |
 | [`07-coach-plan/`](07-coach-plan/) | Kế hoạch một trang: coach nhóm K4 theo khung Scrum (coach là Scrum Master, sprint bám các cổng của chương trình, Definition of Done) | [`coach-plan.md`](07-coach-plan/coach-plan.md), bản in A4 một trang [`coach-plan.pdf`](07-coach-plan/coach-plan.pdf) |
 | [`slides.pdf`](slides.pdf) | Bản nộp chính: 10 slide tóm tắt để present | [`slides.pdf`](slides.pdf) |
@@ -61,7 +61,7 @@ docker run --rm -v "$PWD":/home/marp/app marpteam/marp-cli:v4.0.3 slides/slides.
 docker run --rm -v "$PWD":/home/marp/app marpteam/marp-cli:v4.0.3 slides/slides.md --html --allow-local-files -o slides/slides.html
 ```
 
-Cách cài đặt và chạy prototype: [`05-prototype/SETUP.md`](05-prototype/SETUP.md). Không có API key (mã truy cập dịch vụ AI) thì app chạy ở chế độ không dùng AI.
+Cách cài đặt và chạy prototype, bằng Python hoặc Docker: [`05-prototype/SETUP.md`](05-prototype/SETUP.md). Không có API key (mã truy cập dịch vụ AI) thì app chạy ở chế độ không dùng AI.
 
 ## 2. Ràng buộc đạo đức đã tuân thủ
 
@@ -86,7 +86,7 @@ Tôi dùng Claude (Claude Code) làm trợ lý trong suốt bài tập.
 | Journey map | Dựng sơ đồ Mermaid và bảng chi tiết | Duyệt các bước và điểm cảm xúc |
 | Need statement | Soạn câu chữ và bố cục báo cáo | Chọn điểm đau trọng tâm, nhóm người dùng, loại các phương án khác, chốt câu need statement |
 | Best practice | Tìm kiếm, đọc nguồn, tóm tắt số liệu | Chọn bài học cho Vinmec |
-| Prototype | Viết mã nguồn, dữ liệu giả, test (xem [`05-prototype/prompts/README.md`](05-prototype/prompts/README.md)) | Đặt yêu cầu và guardrail, chạy thử (chưa kịp thử với người dùng thật) |
+| Prototype | Viết mã nguồn, dữ liệu giả, test (xem [`05-prototype/prompts/README.md`](05-prototype/prompts/README.md)) | Đặt yêu cầu và guardrail, chọn hướng AI đọc giấy hẹn và nguyên tắc luật trước, AI sau, chạy thử (chưa kịp thử với người dùng thật) |
 | Rủi ro và đạo đức | Soạn bản nháp từ kết quả kiểm thử | Đối chiếu với kết quả kiểm thử |
 | Coach plan | Soạn bản nháp theo khung Scrum | Chốt lịch, vai trò và các tình huống kẹt từ kinh nghiệm làm bài |
 | Slide, README, thuật ngữ | Soạn bản nháp, biên tập văn phong | Duyệt nội dung |

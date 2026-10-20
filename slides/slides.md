@@ -57,6 +57,8 @@ Lúc đầu tôi định tìm hiểu việc đặt lịch nói chung. Nhưng đi
 | Đặt lịch là khâu khó chịu nhất | Không ai chọn. P1 chấm tái khám 5/5 khó chịu | Bác bỏ. Vấn đề lộ ra ở **tái khám** |
 | Người quen dùng app sẽ đặt qua app | P3 quen app 4/5 vẫn gọi điện rồi đến thẳng | Bác bỏ một phần. Kênh phụ thuộc niềm tin |
 
+Insight trọng tâm: người nhà muốn người thân tái khám với đúng bác sĩ cũ, nhưng đây là điều họ ít làm chủ nhất.
+
 > "Không được chủ động lựa chọn lại bác sĩ đã khám… lần đầu" (P1)
 > "Thôi mình chọn bác sĩ đầu tiên cho nhanh" (P2)
 
@@ -69,7 +71,12 @@ Chỗ khó thật nằm ở khâu tái khám: P1 chấm 5/5 khó chịu vì khô
 
 ## Journey map: cảm xúc thấp nhất ở bước tìm lịch của bác sĩ cũ
 
-![w:1150](../02-journey-map/journey-map.png)
+![w:1170](img/journey-map-slide.png)
+
+| | Sau buổi khám trước | Chuẩn bị đặt | **Đặt lại đúng bác sĩ cũ** | Hoàn tất | Ngày tái khám (ngoài phạm vi) |
+|---|---|---|---|---|---|
+| Điểm đau | Phải tự nhớ lịch tái khám (D6) | Tin người quen hơn app (D5) | **Không chọn lại được bác sĩ cũ, dò lịch từng ngày (D1)** | Nhập lại giấy tờ, thông báo chỉ về máy người đặt (D2) | Vẫn lấy số, đăng ký lại, chờ (D3, D4) |
+| Bằng chứng | P2-1b | P1-10, P2-10 | P1 chấm 5/5 khó chịu, P2-11, ảnh app IMG_4760 | P2-5, P2-6 | P1-7, P2-7, P3-1b |
 
 <p class="small">Bước 5 và 9 dùng điểm người tham gia tự chấm, các bước khác ước lượng từ lời kể.</p>
 
@@ -145,31 +152,32 @@ Nhấn bài học ngược của Fast Pass: chỉ 11% lời mời được nhậ
 
 ---
 
-## Prototype: phiếu tái khám + xem mọi ngày trống cùng lúc
+## Prototype: đọc giấy hẹn, hiện mọi ngày trống
 
 <div class="cols">
 <div>
 
-**Luồng:** người nhà mở phiếu tái khám hoặc gõ yêu cầu. App kiểm tra dấu hiệu khẩn cấp trước, rồi AI đọc yêu cầu, app đối chiếu bác sĩ và **hiện tất cả ngày trống** trong khoảng tái khám. Xác nhận xong, thông báo gửi cả người đặt và người thân.
+**Luật (đang chạy):** bỏ dòng họ tên, chẩn đoán, đơn thuốc trên giấy hẹn. Đọc bác sĩ và ngày hẹn theo mẫu quen ("Hẹn ngày 12/11", "tái khám sau 1 tháng"). Kiểm tra khẩn cấp, tìm bác sĩ, rồi **hiện tất cả ngày trống** quanh ngày hẹn.
 
-**Vai trò của AI:** chỉ đọc câu tự do và tách ra các trường thông tin lịch hẹn. AI không chẩn đoán, không tạo lịch, không tạo tên bác sĩ.
+**AI (đã thiết kế, chưa bật):** đọc những giấy hẹn và câu nói luật không hiểu (viết tắt, "đầu tháng 12"), để có phiếu tái khám mà **Vinmec không cần tính năng mới**. Nguyên tắc: **luật trước, AI sau**. AI không chẩn đoán, không tạo lịch.
 
-**Thử với người dùng:** đặt từ phiếu, gõ tên bác sĩ sai, gõ câu khẩn cấp. <span class="warn">Chưa kịp thử với người dùng thật trong thời hạn bài tập.</span>
+**Thử với người dùng:** <span class="warn">chưa kịp thử với người dùng thật.</span>
 
 </div>
 <div>
 
-![h:300](../05-prototype/screenshots/02-lich-trong.png) ![h:220](../05-prototype/screenshots/03-khan-cap.png)
+![h:255](../05-prototype/screenshots/05-kiem-tra-phieu.png) ![h:255](../05-prototype/screenshots/06-lich-trong-giay-hen.png)
 
-<p class="small">Trên: lịch trống của bác sĩ cũ. Dưới: câu khẩn cấp hiện ngay nút gọi 115.</p>
+<p class="small">Giấy hẹn mẫu GH-1, đọc bằng luật. Trái: kiểm tra phiếu. Phải: mọi ngày trống quanh ngày hẹn 12/11. Chạy bằng Python hoặc Docker.</p>
 
 </div>
 </div>
 
 <!--
-(1:30) Nếu có thời gian, demo trực tiếp: mở phiếu tái khám để thấy mọi ngày trống, rồi gõ một câu khẩn cấp để thấy app dừng lại và hiện nút gọi 115.
-AI chỉ đọc câu người nhà gõ. Lịch và bác sĩ luôn lấy từ dữ liệu, để AI không bịa.
-Nói thẳng: chưa kịp thử với người dùng thật trong thời hạn bài tập. Đã có kịch bản 3 nhiệm vụ trong test-log.md, đây là việc đầu tiên nếu có thêm thời gian.
+(1:30) Demo: bấm giấy hẹn mẫu GH-1, app bỏ 3 dòng thông tin cá nhân, đọc được bác sĩ Trần Minh An và ngày hẹn 12/11, rồi hiện 8 ngày trống quanh ngày hẹn. Tất cả do luật xử lý. Sau đó gõ một câu khẩn cấp để thấy app dừng lại, hiện nút gọi 115.
+Nói rõ: bản này chạy bằng luật, chưa bật AI. Luật đọc được giấy hẹn theo mẫu quen (GH-1, GH-2). Giấy viết tắt như GH-3 ("đầu tháng 12") thì luật không đọc được ngày, người nhà phải tự chọn. Đó chính là chỗ AI được thiết kế để dùng. Code đã nối sẵn prompt, khuôn dữ liệu và guardrail, chỉ cần bật khi có API key.
+Nếu bị hỏi "sao không bật AI": tôi muốn luật làm trước phần lớn việc, để không gửi dữ liệu y tế ra ngoài khi không cần. AI chỉ dành cho phần luật không làm được. Bước tiếp theo là chạy thử AI trên các giấy hẹn mẫu, đo tỷ lệ đọc đúng so với luật.
+Nói thẳng: chưa kịp thử với người dùng thật.
 -->
 
 ---
@@ -182,7 +190,9 @@ Nói thẳng: chưa kịp thử với người dùng thật trong thời hạn b
 | Câu khẩn cấp bằng tiếng Anh: không có hướng dẫn 115 | Từ khóa có bản không dấu và tiếng Anh |
 | Hỏi chọn khoa: liệt kê tên bệnh, gợi ý chụp MRI | AI chỉ được tách thông tin lịch hẹn theo khuôn cố định, bị cấm chẩn đoán |
 | Tên bác sĩ không có thật: vẫn hướng dẫn đặt | Đối chiếu danh sách, báo rõ "không tìm thấy" |
-| Đưa tên thật người thân vào câu trả lời | Dữ liệu giả. Bản thật không gửi thông tin định danh cho AI |
+| Đưa tên thật người thân vào câu trả lời | Bỏ dòng họ tên, chẩn đoán, đơn thuốc trên giấy hẹn **trước khi đọc**. Luật đọc được thì không gửi gì cho AI |
+
+Đường khẩn cấp: phát hiện dấu hiệu nguy hiểm thì dừng đặt lịch, hiện ngay nút gọi 115, không hỏi thêm, không chẩn đoán.
 
 <!--
 (1:00) Mở bằng điểm tốt của MIA: có popup gọi 115 một chạm, có câu lưu ý, không bịa lịch.
@@ -198,8 +208,8 @@ Sau đó mới nói chỗ cần cải thiện, và cách prototype xử lý từ
 
 **Coach plan theo Scrum**
 - Coach là **Scrum Master** (người điều phối) chung cho 5–10 bạn K4. Mỗi cặp là một Scrum Team, có 1 Product Owner giữ need statement. Khoa và mentor là bên liên quan
-- Sprint 1 tuần: lên kế hoạch thứ Hai, họp ngắn mỗi sáng tại khoa, trình bày ở checkpoint thứ Sáu, rút kinh nghiệm cuối tuần
-- Mục tiêu từng tuần bám các mốc: Cổng 1 (need statement), 2 vòng thử người dùng, Demo Day
+- Lịch: sprint 1 tuần (kế hoạch thứ Hai, họp ngắn mỗi sáng, trình bày ở checkpoint thứ Sáu), bám Cổng 1, 2 vòng thử người dùng, Demo Day
+- Gỡ kẹt qua câu "đang kẹt gì" mỗi sáng: bài toán quá rộng, phỏng vấn toàn ý kiến, AI bịa nguồn
 - Tiêu chí hoàn thành: có bằng chứng, không dữ liệu thật của người bệnh, report 4 phần
 
 </div>
@@ -212,7 +222,7 @@ Sau đó mới nói chỗ cần cải thiện, và cách prototype xử lý từ
 - Trích dẫn lấy từ ghi chép, chưa đối chiếu nguyên văn với video
 - Prototype chưa kịp thử với người dùng thật
 
-**Bước tiếp theo:** thử prototype với 2–3 người nhà có người thân lớn tuổi, đo số liệu nền trên MyVinmec
+**Bước tiếp theo:** thử prototype với 2–3 người nhà có người thân lớn tuổi, bật và đo AI trên giấy hẹn mẫu, đo số liệu nền trên MyVinmec
 
 </div>
 </div>

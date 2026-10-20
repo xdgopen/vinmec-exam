@@ -44,6 +44,7 @@ Danh sách các thuật ngữ chuyên ngành, mã ký hiệu và từ viết t�
 | MyVinmec | Ứng dụng di động của Vinmec để đặt lịch khám và xem kết quả |
 | MIA | "Trợ lý sức khỏe AI MIA", chatbot trong ứng dụng MyVinmec |
 | Tái khám | Lần khám tiếp theo theo hẹn của bác sĩ, để theo dõi điều trị |
+| Giấy hẹn tái khám | Giấy bác sĩ đưa sau buổi khám, ghi ngày hoặc khoảng thời gian cần quay lại. Prototype đọc giấy hẹn (dữ liệu giả) để tạo phiếu tái khám |
 | CCCD | Căn cước công dân |
 | BHYT | Bảo hiểm y tế |
 | PID | Mã định danh người bệnh trong hệ thống bệnh viện |
@@ -87,6 +88,8 @@ Danh sách các thuật ngữ chuyên ngành, mã ký hiệu và từ viết t�
 | Guardrail | Cơ chế chặn để hệ thống không làm điều nguy hiểm, ví dụ không đưa ra chẩn đoán |
 | Red flag | Dấu hiệu nguy hiểm cần cấp cứu ngay, ví dụ đau ngực, khó thở |
 | Fallback | Phương án dự phòng khi thành phần chính lỗi, ví dụ dùng luật khi không gọi được AI |
+| Rule-based (theo luật) | Xử lý bằng luật viết sẵn (mẫu chữ, danh sách từ) thay vì AI. Prototype dùng "luật trước, AI sau": luật đọc được thì không gọi AI |
+| Bỏ thông tin định danh (redaction) | Xóa các phần có thể nhận ra người bệnh hoặc lộ thông tin sức khỏe trước khi xử lý hay gửi đi |
 | Prompt injection | Kiểu tấn công: chèn câu lệnh vào nội dung người dùng nhập để điều khiển AI làm sai |
 | Hallucination (AI bịa) | AI tạo ra thông tin không có thật nhưng trình bày như thật |
 | Streamlit | Thư viện Python để dựng nhanh giao diện web |
@@ -97,6 +100,9 @@ Danh sách các thuật ngữ chuyên ngành, mã ký hiệu và từ viết t�
 | Repo, GitHub | Repo là kho mã nguồn và tài liệu. GitHub là nơi lưu repo trực tuyến |
 | README, CHANGELOG | README là file giới thiệu repo. CHANGELOG là nhật ký thay đổi theo phiên bản |
 | Marp, Mermaid | Công cụ dựng slide và vẽ sơ đồ từ văn bản |
+| Docker, image, container | Docker đóng gói app cùng mọi thư viện cần thiết thành một image. Container là một bản đang chạy của image, giống nhau trên mọi máy |
+| Docker Compose | Cách chạy container bằng một file cấu hình (`docker-compose.yml`) và một lệnh |
+| Healthcheck | Lệnh kiểm tra định kỳ xem app trong container còn hoạt động không |
 
 ## 6. Agile và Scrum (dùng trong coach plan)
 

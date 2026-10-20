@@ -1,0 +1,11 @@
+services:
+  prototype:
+    build: .
+    image: vinmec-tai-kham-prototype:0.2.0
+    ports:
+      - "8501:8501"
+    environment:
+      # Để trống thì app chạy ở chế độ không dùng AI.
+      # Muốn bật AI: export ANTHROPIC_API_KEY=... trước khi chạy docker compose up.
+      ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}
+    restart: unless-stopped

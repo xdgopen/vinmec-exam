@@ -4,7 +4,8 @@
 
 | File | Dùng ở đâu | Ghi chú |
 |---|---|---|
-| `extract-system-prompt.md` | `core.extract_with_llm()`, system prompt (hướng dẫn cố định) của `claude-sonnet-5-5` | `{today}` thay bằng ngày hiện tại. Đầu ra ràng buộc bằng JSON schema (`output_config.format`), sau đó kiểm tra lại bằng `core.validate()` |
+| `extract-system-prompt.md` | `core.extract_with_llm()`, system prompt (hướng dẫn cố định) của `claude-sonnet-5-5` | `{today}` thay bằng ngày hiện tại. Đầu ra ràng buộc bằng JSON schema (`output_config.format`), sau đó kiểm tra lại bằng `core.validate()`. Chỉ được gọi khi luật chưa đọc đủ bác sĩ và khoảng ngày |
+| `slip-system-prompt.md` | `core.slip_with_llm()`, đọc giấy hẹn tái khám | Chỉ nhận văn bản đã bỏ các dòng định danh và sức khỏe (`core.redact`). Chỉ trích bác sĩ, khoa, ngày khám, ngày hẹn hoặc khoảng hẹn. Chỉ được gọi khi luật chưa đọc đủ |
 
 Guardrail (cơ chế chặn rủi ro) nằm trong code, không trong prompt, vì không nên giao việc an toàn cho LLM (mô hình ngôn ngữ lớn):
 
@@ -20,4 +21,6 @@ Toàn bộ mã nguồn, dữ liệu giả, test và tài liệu trong `05-protot
 
 Bản v0.1.1 (19/10/2026) sửa thêm theo yêu cầu "sửa lỗi tìm bác sĩ theo tên ngắn trong prototype" (chi tiết trong `../CHANGELOG.md`).
 
-Kiểm chứng: 11 test không giao diện đạt (chế độ không dùng AI). Tôi đã chạy app và chụp màn hình (`../screenshots/`). Chưa chạy gọi Claude thật vì chưa có API key.
+Bản v0.2.0 (20/10/2026) làm theo yêu cầu "làm phương án B": thêm luồng AI đọc giấy hẹn tái khám để tạo phiếu, đảo thứ tự thành luật trước và AI sau, sửa lỗi của bộ đọc theo luật.
+
+Kiểm chứng: 18 test không giao diện đạt (AI được giả lập trong test). Tôi đã chạy app và chụp màn hình (`../screenshots/`). Chưa chạy gọi Claude thật vì chưa có API key.

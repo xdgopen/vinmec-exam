@@ -63,6 +63,24 @@ def screen_home():
                 start_booking(doc, t["patient"], s, e, source=f"Phiếu {t['id']}")
                 st.rerun()
 
+    st.subheader("Chưa có phiếu? Tạo phiếu từ giấy hẹn")
+    st.caption("Dán nội dung giấy hẹn tái khám (in hoặc chép tay). Ứng dụng bỏ các dòng có họ tên, "
+               "chẩn đoán, đơn thuốc trước khi đọc, rồi chỉ lấy bác sĩ và ngày hẹn.")
+    cols = st.columns(len(core.SLIPS))
+    for c, sl in zip(cols, core.SLIPS):
+        c.button(f"Mẫu {sl['id']}", key=f"slip_sample_{sl['id']}", help=sl["label"],
+                 on_click=lambda t=sl["text"]: ss.update(slip=t))
+    slip = st.text_area("Nội dung giấy hẹn (dữ liệu giả)", key="slip", height=150)
+    if st.button("Tạo phiếu tái khám", key="slip_go") and slip.strip():
+        clean, _ = core.redact(slip)
+        flag = core.red_flag(clean)
+        if flag:
+            go("emergency", flag=flag)
+            st.rerun()
+        data, mode, removed = core.read_slip(slip, today())
+        go("slip_review", slip_data=data, mode=mode, removed=removed)
+        st.rerun()
+
     st.subheader("Hoặc nhập yêu cầu")
     text = st.text_area(
         "Bạn muốn đặt lịch thế nào?",
@@ -99,10 +117,50 @@ def _parse(s: str):
 
 
 def mode_badge():
-    if ss.get("mode") == "rules":
-        st.caption("⚙️ Chế độ không dùng AI (không có API key hoặc AI lỗi, đang dùng bộ đọc theo luật)")
-    elif ss.get("mode") == "ai":
-        st.caption(f"🤖 Yêu cầu được AI ({core.MODEL}) đọc. AI chỉ trích thông tin lịch hẹn, không tư vấn y khoa.")
+    mode = ss.get("mode")
+    if mode == "rules":
+        st.caption("⚙️ Đọc bằng luật: thông tin đã đủ rõ nên không cần gọi AI, không gửi dữ liệu ra ngoài.")
+    elif mode == "fallback":
+        st.caption("⚙️ Chế độ không dùng AI: luật chưa đọc đủ thông tin và không gọi được AI "
+                   "(không có API key hoặc AI lỗi). Bạn hãy kiểm tra và bổ sung.")
+    elif mode == "ai":
+        st.caption(f"🤖 Luật chưa đọc đủ nên đã nhờ AI ({core.MODEL}) đọc. "
+                   "AI chỉ trích thông tin lịch hẹn, không tư vấn y khoa.")
+
+
+def screen_slip_review():
+    mode_badge()
+    data = ss.slip_data
+    st.title("Kiểm tra phiếu tái khám")
+    st.caption(f"Đã bỏ {ss.removed} dòng có thông tin cá nhân hoặc sức khỏe trước khi đọc. "
+               "Ứng dụng không đọc chẩn đoán hay đơn thuốc.")
+    doc, suggestions = core.match_doctor(data["doctor_name"], data["department"])
+    options = ([doc] if doc else suggestions) or core.DOCTORS
+    labels = [f"{d['title']} {d['name']} · {d['department']}" for d in options]
+    if doc:
+        st.success(f"Đọc được bác sĩ: **{labels[0]}**")
+    elif data["doctor_name"]:
+        st.warning(f"Đọc được tên **{data['doctor_name']}** nhưng chưa chắc là bác sĩ nào. Bạn hãy chọn đúng bác sĩ.")
+    else:
+        st.warning("Chưa đọc được tên bác sĩ. Bạn hãy chọn bác sĩ đã khám.")
+    pick = st.selectbox("Bác sĩ đã khám", range(len(options)), format_func=lambda i: labels[i], key="slip_doc")
+    target = core.slip_target(data, today())
+    if target:
+        st.write(f"Ngày hẹn tái khám đọc được: **{target:%d/%m/%Y}**")
+    else:
+        st.warning("Chưa đọc được ngày hẹn. Bạn hãy chọn ngày bác sĩ hẹn.")
+    target = st.date_input("Ngày hẹn tái khám", value=target or today() + dt.timedelta(days=30),
+                           format="DD/MM/YYYY", key="slip_date")
+    patient = st.selectbox("Người khám", ["Bố", "Mẹ", "Ông", "Bà", "Người thân"], key="slip_patient")
+    start, end = core.slip_window(target, today())
+    st.caption(f"Ứng dụng sẽ tìm lịch trống từ {start:%d/%m} đến {end:%d/%m/%Y} và tạo nhắc lịch tái khám.")
+    c1, c2 = st.columns(2)
+    if c1.button("Đúng, tạo phiếu và xem lịch trống", key="slip_ok", type="primary"):
+        start_booking(options[pick], patient, start, end, source="Giấy hẹn")
+        st.rerun()
+    if c2.button("Quay lại", key="back_slip"):
+        reset()
+        st.rerun()
 
 
 def screen_emergency():
@@ -215,6 +273,7 @@ SCREENS = {
     "home": screen_home,
     "emergency": screen_emergency,
     "not_found": screen_not_found,
+    "slip_review": screen_slip_review,
     "availability": screen_availability,
     "confirm": screen_confirm,
 }

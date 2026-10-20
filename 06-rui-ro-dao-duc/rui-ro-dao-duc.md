@@ -11,7 +11,7 @@
 
 ## Tóm tắt
 
-Báo cáo dựa trên hai nguồn: 7 rủi ro quan sát được khi kiểm thử MIA (chatbot trong ứng dụng MyVinmec), và 10 rủi ro của prototype, mỗi rủi ro kèm biện pháp giảm thiểu và phần còn hở.
+Báo cáo dựa trên hai nguồn: 7 rủi ro quan sát được khi kiểm thử MIA (chatbot trong ứng dụng MyVinmec), và 12 rủi ro của prototype, mỗi rủi ro kèm biện pháp giảm thiểu và phần còn hở.
 
 Hai rủi ro cao nhất được xử lý ngay trong thiết kế prototype:
 
@@ -36,6 +36,8 @@ Các rủi ro dưới đây đã quan sát thật. Prototype được thiết k�
 | R-M6 | Mất lịch sử hội thoại, kể cả hướng dẫn 115 | Không xem lại được lời khuyên an toàn đã nhận | `IMG_4762.jpg` |
 | R-M7 | App bắt buộc ô "Lý do khám… mô tả rõ triệu chứng" khi đặt lịch | Thu thập dữ liệu sức khỏe nhiều hơn mức cần cho một lịch tái khám | `IMG_4760.jpg` |
 
+> Ghi chú: bản prototype hiện chạy bằng luật, phần AI đã thiết kế nhưng chưa bật. Các rủi ro về AI dưới đây là rủi ro của thiết kế khi bật AI, và biện pháp đã được nối sẵn trong code.
+
 ## 2. Rủi ro của prototype và cách giảm thiểu
 
 | # | Rủi ro | Mức | Cách giảm thiểu trong prototype | Còn hở |
@@ -50,19 +52,24 @@ Các rủi ro dưới đây đã quan sát thật. Prototype được thiết k�
 | 8 | Quá tin vào hệ thống: người dùng nghĩ lịch hiện ra là chắc chắn | Thấp | Ghi rõ "prototype, dữ liệu giả, không phải sản phẩm của Vinmec". Bản thật phải gửi xác nhận chính thức sau khi bệnh viện giữ chỗ | Không |
 | 9 | Chèn lệnh vào prompt (prompt injection) qua ô gõ tự do | Thấp | LLM không có công cụ, không truy cập dữ liệu, đầu ra chỉ là JSON đã kiểm tra. Lịch và bác sĩ luôn lấy từ dữ liệu | Không |
 | 10 | Lộ API key (mã bí mật để gọi dịch vụ AI) | Thấp | Key để trong `.streamlit/secrets.toml` hoặc biến môi trường, file này đã nằm trong `.gitignore`. Không có key thì app chạy chế độ không dùng AI | Không |
+| 11 | Giấy hẹn tái khám chứa thông tin y tế và định danh (họ tên, năm sinh, chẩn đoán, đơn thuốc) | Cao | Các dòng này bị bỏ **trước khi đọc**, kể cả trước khi gửi cho AI (`core.redact`). System prompt cấm AI đọc hay nhắc lại chẩn đoán, thuốc. Prototype chỉ dùng giấy hẹn giả | Danh sách từ cần bỏ chưa đầy đủ, một dòng ghi lẫn tên bác sĩ và thông tin bệnh vẫn có thể lọt. Bản thật cần cơ chế khử định danh chuẩn và đánh giá theo quy định bảo vệ dữ liệu |
+| 12 | AI đọc sai bác sĩ hoặc ngày hẹn trên giấy hẹn, dẫn tới đặt nhầm | Trung bình | Luật đọc trước, AI chỉ đọc phần luật không hiểu. Bác sĩ phải khớp danh sách thật. Người nhà **kiểm tra và sửa** bác sĩ, ngày hẹn ở màn hình "Kiểm tra phiếu tái khám" trước khi tìm lịch | Người dùng có thể bấm xác nhận mà không đọc kỹ |
 
 ## 3. Đường chuyển tuyến khẩn cấp
 
 ```mermaid
 flowchart TD
-  A[Người dùng gõ yêu cầu hoặc mở phiếu tái khám] --> B{Kiểm tra dấu hiệu nguy hiểm<br/>bằng luật, chạy trước mọi bước}
+  A[Người dùng gõ yêu cầu, dán giấy hẹn<br/>hoặc mở phiếu tái khám] --> R[Giấy hẹn: bỏ các dòng<br/>định danh và sức khỏe]
+  R --> B{Kiểm tra dấu hiệu nguy hiểm<br/>bằng luật, chạy trước mọi bước}
   B -->|Có| C[Dừng luồng đặt lịch<br/>Hiện ngay: GỌI 115<br/>hoặc đến cơ sở cấp cứu gần nhất]
   C --> D[Không hỏi thêm thông tin<br/>Không gợi ý đặt lịch thường<br/>Không chẩn đoán]
-  B -->|Không| E[LLM trích xuất thông tin lịch hẹn ra JSON]
+  B -->|Không| G[Luật đọc bác sĩ, ngày hẹn]
+  G -->|Đủ thông tin| H[Đối chiếu bác sĩ với danh sách thật]
+  G -->|Chưa đủ| E[Khi bật AI: AI đọc phần còn lại, trả JSON]
   E --> F{JSON hợp lệ?}
-  F -->|Không| G[Dùng bộ phân tích theo luật]
-  F -->|Có| H[Đối chiếu bác sĩ với danh sách thật]
-  G --> H
+  F -->|Có| H
+  F -->|Không, hoặc chưa bật AI như hiện tại| K[Người nhà tự bổ sung]
+  K --> H
   H -->|Không tìm thấy| I[Báo rõ không tìm thấy, gợi ý tên gần đúng]
   H -->|Tìm thấy| J[Hiện các ngày bác sĩ còn trống từ dữ liệu]
 ```

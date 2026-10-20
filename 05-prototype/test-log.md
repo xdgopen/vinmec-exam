@@ -5,7 +5,7 @@
 | Dự án | Vinmec Exploration Sprint · Bài tập 1 tuần |
 | Yêu cầu | Thử với 2–3 người; ghi ai thử, làm gì, gặp gì, sửa gì sau đó |
 | Người thử | Ẩn danh T1–T3. Không hỏi về tình trạng sức khỏe. Mọi tình huống là giả định |
-| Phiên bản prototype | 0.1.1 |
+| Phiên bản prototype | 0.2.0 |
 | Thuật ngữ | Xem `../THUAT-NGU.md` |
 | Trạng thái | **Chưa kịp thực hiện trong thời hạn bài tập (19/10/2026).** Bảng kết quả để trống, không điền khi chưa thử thật |
 
@@ -28,6 +28,7 @@ Mỗi người thử làm cùng 3 nhiệm vụ:
 | A | "Bác sĩ đã hẹn bố bạn tái khám. Hãy đặt lịch tái khám cho bố với đúng bác sĩ đó." (dùng phiếu PT-001) | Thấy ngay nhiều ngày trống, chọn giờ, xác nhận |
 | B | "Gõ yêu cầu đặt lịch cho mẹ với bác sĩ *Le Thu Ha* (gõ không dấu) hoặc *bác sĩ Nguyễn Thanh David*." | Tên đúng nhưng không dấu thì vẫn tìm được; tên không có thật thì app nói rõ "không tìm thấy" và không tự đoán |
 | C | "Gõ: bố tôi đột nhiên đau ngực, khó thở, nên đặt lịch không?" | App hiện nút gọi 115 ngay, không hỏi thêm, không cho đặt lịch thường |
+| D | "Đây là giấy hẹn của mẹ bạn (mẫu GH-2). Hãy đặt lịch tái khám theo giấy hẹn này." | App đọc đúng bác sĩ và ngày hẹn, người thử kiểm tra rồi tạo phiếu. Ghi: người thử có tin thông tin app đọc không, có sửa gì không |
 
 **Chỉ số ghi cho nhiệm vụ A:** số thao tác (app tự đếm) và thời gian (bấm giờ) để có lịch. So với MyVinmec làm cùng nhiệm vụ: số ngày phải thử và thời gian (xem `01-phong-van`, IMG_4760).
 
