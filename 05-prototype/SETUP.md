@@ -105,7 +105,7 @@ python -m pytest -q tests
 
 Kết quả đúng là `18 passed`. Trong test, AI được giả lập, nên không cần key.
 
-**Thử tay 4 tình huống (cả hai cách)**
+**Thử tay 6 tình huống (cả hai cách)**
 
 | # | Thao tác | Kết quả đúng |
 |---|---|---|
@@ -116,7 +116,59 @@ Kết quả đúng là `18 passed`. Trong test, AI được giả lập, nên kh
 | 5 | Ở mục "Tạo phiếu từ giấy hẹn", bấm "Mẫu GH-2" rồi "Tạo phiếu tái khám" | Màn hình kiểm tra hiện bác sĩ Lê Thu Hà, ngày hẹn 20/11/2026, báo đã bỏ 2 dòng thông tin cá nhân. Bấm "Đúng, tạo phiếu…" thì sang lịch trống |
 | 6 | Bấm "Mẫu GH-3" rồi "Tạo phiếu tái khám" (không có API key) | Nhãn "Chế độ không dùng AI", báo chưa đọc được ngày hẹn và cho người dùng tự chọn. Có key thì AI đọc được ngày hẹn |
 
-## 6. Đưa lên mạng để có link (Streamlit Community Cloud)
+## 6. Hướng dẫn sử dụng từng bước
+
+Mở app tại `http://localhost:8501`. Màn hình đầu có ba cách bắt đầu, xếp từ trên xuống: **Phiếu tái khám bác sĩ đã hẹn**, **Tạo phiếu từ giấy hẹn**, **Hoặc nhập yêu cầu**. Toàn bộ dữ liệu là dữ liệu giả, và không có lịch thật nào được tạo.
+
+Bản hiện tại chạy bằng luật, chưa bật AI. Nhãn nhỏ phía trên mỗi màn hình cho biết thông tin được đọc bằng cách nào. "Đọc bằng luật" nghĩa là luật đã đọc đủ. "Chế độ không dùng AI" nghĩa là luật chưa đọc đủ và bạn cần tự bổ sung.
+
+### Cách 1: đặt lịch từ phiếu tái khám có sẵn
+
+1. Ở mục **Phiếu tái khám bác sĩ đã hẹn**, xem 3 phiếu mẫu. Mỗi phiếu ghi người khám, bác sĩ và khoảng thời gian tái khám.
+2. Ở phiếu đầu tiên (Bố, ThS.BS Trần Minh An), bấm **Xem lịch trống và đặt**.
+3. Màn hình **Lịch trống của bác sĩ** hiện tất cả các ngày bác sĩ còn trống trong khoảng tái khám, mỗi ngày kèm các giờ còn trống. Bấm một giờ, ví dụ `08:30`.
+4. Màn hình **Xác nhận lịch tái khám** hiện người khám, bác sĩ, thời gian, người nhận thông báo và lịch nhắc. Bấm **Xác nhận (mô phỏng)**.
+5. App báo đã đặt (mô phỏng) và hiện **số thao tác** từ đầu đến khi có lịch. Bấm **Đặt lịch khác** để quay về màn hình đầu.
+
+**Khi bác sĩ đã kín lịch:** mở phiếu thứ hai (Mẹ, TS.BS Lê Thu Hà). App báo bác sĩ đã kín lịch trong khoảng này và gợi ý 3 giờ trống gần nhất sau đó. Bấm **🔔 Báo cho tôi khi có lịch sớm hơn** để vào danh sách chờ (mô phỏng). Thông báo sẽ gửi cho cả người đặt và người khám.
+
+### Cách 2: tạo phiếu từ giấy hẹn
+
+1. Ở mục **Chưa có phiếu? Tạo phiếu từ giấy hẹn**, bấm **Mẫu GH-1** để điền sẵn một giấy hẹn mẫu. Bạn cũng có thể tự dán nội dung giấy hẹn (dữ liệu giả) vào ô **Nội dung giấy hẹn**.
+2. Bấm **Tạo phiếu tái khám**.
+3. Màn hình **Kiểm tra phiếu tái khám** hiện:
+   - số dòng có thông tin cá nhân hoặc sức khỏe đã bị bỏ trước khi đọc (GH-1 bỏ 3 dòng);
+   - bác sĩ đọc được (Trần Minh An) và ngày hẹn đọc được (12/11/2026);
+   - khoảng app sẽ tìm lịch: từ 7 ngày trước đến 7 ngày sau ngày hẹn.
+4. Kiểm tra lại, sửa nếu cần: chọn **Bác sĩ đã khám**, chỉnh **Ngày hẹn tái khám**, chọn **Người khám**.
+5. Bấm **Đúng, tạo phiếu và xem lịch trống**. App hiện mọi ngày trống quanh ngày hẹn. Từ đây, chọn giờ và xác nhận giống bước 3–5 của cách 1.
+
+Ba giấy hẹn mẫu cho kết quả khác nhau:
+
+| Mẫu | Đặc điểm | Kết quả |
+|---|---|---|
+| GH-1 | Bản in, có ngày hẹn cụ thể | Luật đọc đủ bác sĩ và ngày hẹn 12/11 |
+| GH-2 | Chép tay, chỉ ghi "tái khám sau 1 tháng" | Luật tính ngày hẹn 20/11 từ ngày khám. Bác sĩ Lê Thu Hà đã kín lịch quanh ngày này, nên app gợi ý giờ gần nhất và danh sách chờ |
+| GH-3 | Viết tắt, ghi "đầu tháng 12" | Luật đọc được bác sĩ nhưng **không đọc được ngày hẹn**, app hiện "Chế độ không dùng AI". Bạn tự chọn ngày ở màn hình kiểm tra. Đây là loại giấy AI được thiết kế để đọc khi bật |
+
+### Cách 3: gõ yêu cầu tự do
+
+1. Ở mục **Hoặc nhập yêu cầu**, gõ một câu, ví dụ: `đặt tái khám cho mẹ với bác sĩ An giữa tháng 11, buổi sáng`.
+2. Bấm **Tìm lịch**. App đọc người khám, bác sĩ, khoảng ngày, buổi. Bạn chỉ cần gõ tên gọi ("An"), có dấu hay không đều được.
+3. Nếu tìm được bác sĩ, app vào thẳng màn hình lịch trống. Chọn giờ và xác nhận như cách 1.
+4. Nếu không tìm được bác sĩ (ví dụ gõ `bác sĩ Nguyễn Thanh David`), app báo **Không tìm thấy** và cho chọn từ danh sách, không tự đoán.
+
+Một số cách nói về thời gian luật đọc được: `12/11` hoặc `từ 12/11 đến 20/11`, `đầu/giữa/cuối tháng 11`, `tuần sau`, `tháng sau`, `3 tháng nữa`. Nếu câu không có thời gian, app tìm lịch trong 30 ngày tới.
+
+### Tình huống khẩn cấp
+
+Ở ô giấy hẹn hoặc ô yêu cầu, gõ một câu có dấu hiệu nguy hiểm, ví dụ `bố tôi đột nhiên đau ngực, khó thở`, rồi bấm nút tương ứng. App **dừng luồng đặt lịch ngay**, hiện cảnh báo và nút **📞 Gọi 115**, không hỏi thêm thông tin. Bấm **Quay lại** để về màn hình đầu.
+
+### Quay lại và làm lại
+
+Mỗi màn hình đều có nút **Quay lại**. Nút này xóa thông tin đang nhập và đưa bạn về màn hình đầu.
+
+## 7. Đưa lên mạng để có link (Streamlit Community Cloud)
 
 1. Đẩy repo lên GitHub.
 2. Vào share.streamlit.io, đăng nhập bằng GitHub, chọn **Create app**.
@@ -124,7 +176,7 @@ Kết quả đúng là `18 passed`. Trong test, AI được giả lập, nên kh
 4. Nếu muốn bật AI: vào *Advanced settings*, phần *Secrets*, dán `ANTHROPIC_API_KEY = "sk-ant-..."`.
 5. Bấm **Deploy**. Sau vài phút sẽ có link dạng `https://<tên-app>.streamlit.app`. Dán link này vào README.
 
-## 7. Lỗi thường gặp
+## 8. Lỗi thường gặp
 
 | Lỗi | Nguyên nhân | Cách xử lý |
 |---|---|---|
@@ -136,7 +188,7 @@ Kết quả đúng là `18 passed`. Trong test, AI được giả lập, nên kh
 | Đã điền key mà vẫn hiện "Chế độ không dùng AI" | Key sai, hết hạn mức, model không truy cập được, hoặc key chưa được đưa vào đúng chỗ | Kiểm tra lại theo bảng ở mục 4. Với Docker, key phải được truyền bằng `-e` hoặc biến môi trường trước khi chạy Compose |
 | Trình duyệt không tự mở | Chạy trên máy chủ, chế độ headless hoặc Docker | Mở thủ công `http://localhost:8501` |
 
-## 8. Cấu trúc thư mục
+## 9. Cấu trúc thư mục
 
 ```
 05-prototype/
